@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Maven Pro", sans-serif;
+}
+::before, ::after {
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+body {
+  background-color: rgb(238, 247, 250);
+}
+                            /*  Nav Bar   */
+                            /* ********** */
+nav {
+  background-color: #fff;
+  /* width: 100%; */
+  padding: 18px 0 18px 70px;
+}
+.nav-jobs-app {
+  font-size: 35px;
+  color: #000;
+  /* color: #fe7062; */
+}
+.nav-jobs-app span, .home-jobs-app span {
+  color: #3f43e4;
+}
+                            /*  Page Not Found  */
+                            /* **************** */
+.page-not-found-cont {
+  /* background-color: green; */
+  width: 80%;
+  margin: 20px auto;
+  text-align: center;
+}
+.page-not-found-cont h1 {
+  margin-bottom: 20px;
+}
+.page-not-found-cont a {
+  background-color: #3f43e4;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+                          /*  Home Page */
+                          /* ********** */
+.home-jobs-app {
+  font-size: 45px;
+  margin: 0;
+}
+.home-cont {
+  width: 85%;
+  margin: 40px auto;
+  /* background-color: lightgrey; */
+  display: flex;
+  justify-content: space-between;
+}
+.home-content {
+  /* background-color: red; */
+}
+.home-content-par {
+  /* background-color: green; */
+  width: 85%;
+  margin-top: 15px;
+  text-align: justify;
+}
+.home-content-btn {
+  margin-top: 30px;
+  font-size: 17px;
+  background-color: #3f43e4;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+.home-content-btn a {
+  color: #fff;
+}
+
+                          /*  Login Page */
+                          /* ********** */
+.login-cont {
+  background-color: #fff;
+  width: 550px;
+  margin: 40px auto;
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: 0 5px 25px rgb(1 1 1 /10%);
+}
+.login-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.login-form {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column; 
+}
+.login-form label {
+  margin-bottom: 10px;
+}
+.login-form input {
+  margin-bottom: 15px;
+  padding: 6px 0;
+  text-indent: 5px;
+  border: 0.5px solid #3f43e4;
+  border-radius: 4px;
+}
+.login-form button {
+  padding: 4px 0;
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #3f43e4;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.not-a-member {
+  text-align: center;
+  margin-top: 20px;
+}
+.not-a-member button {
+  border: none;
+  background-color: transparent;
+  color: #3f43e4;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
