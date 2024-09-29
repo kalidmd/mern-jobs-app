@@ -7,6 +7,9 @@ const cors = require('cors');
 const userRouter = require('./routes/users');
 const jobRouter = require('./routes/jobs');
 
+// authentication middleware
+const authenticateUser = require('./middlewares/authentication');
+
 // error handler middleware
 const errorHandlerMiddleware = require('./middlewares/error-handler');
 
@@ -17,7 +20,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/jobs', jobRouter);
+app.use('/api/v1/jobs', authenticateUser, jobRouter);
 
 app.use(errorHandlerMiddleware);
 

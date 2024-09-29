@@ -12,12 +12,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     if(err.name === 'ValidationError') {
         customError.msg = Object.values(err.errors)
             .map((item) => item.message)
-            .join(',')
+            .join(', ')
         customError.statusCode = 400
     }
 
-    //   Duplication Error
-    // *******************
+    //   Duplication Error (value already in use)
+    // ********************************************
     if(err.code && err.code === 11000) {
         customError.msg = `${Object.keys(err.keyValue)} already in use, Please Choose Another ${Object.keys(err.keyValue)}`
         customError.statusCode = 400

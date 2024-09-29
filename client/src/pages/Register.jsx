@@ -15,7 +15,7 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         
-        let result = fetch('http://localhost:5000/api/v1/users', {
+        let result = await fetch('http://localhost:5000/api/v1/users/register', {
             method: 'post',
             body: JSON.stringify({name, email, password}),
             headers: {
@@ -23,8 +23,10 @@ const Register = () => {
             }
         })
 
-        result = await result;
+        result = await result.json();
         
+        localStorage.setItem('token', result.token);
+
         const data = { name, email, password }
         console.log(data);
         console.log(result);

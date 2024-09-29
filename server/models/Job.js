@@ -13,6 +13,11 @@ const jobSchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'interview', 'declined'],
         default: 'pending'
+    },
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'user',
+        required: [true, 'Please Provide User']
     }
 
 }, {timestamps: true})
