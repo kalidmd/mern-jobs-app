@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const auth = async ( req, res, next ) => {
     // check header
     const authHeader = req.headers.authorization;
+    
     if(!authHeader || !authHeader.startsWith('Bearer')) {
         throw new UnauthenticatedError('Unauthorized');
     }
