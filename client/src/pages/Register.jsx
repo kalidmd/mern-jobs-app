@@ -5,7 +5,7 @@ const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    
+    const errorText = document.getElementById('error-text');
     const navigate = useNavigate();
 
     const navigateToLogin = () => {
@@ -25,16 +25,19 @@ const Register = () => {
 
         result = await result.json();
         
-        // localStorage.setItem('token', result.token);
-
-        const data = { name, email, password }
-        console.log(data);
-        console.log(result);
-
-        setName("");
-        setEmail("");
-        setPassword("");
-        navigate('/dashboard');
+        if(result.msg) {
+            errorText.textContent = result.msg
+        } else {
+            localStorage.setItem('token', result.token);
+            const data = { name, email, password }
+            console.log(data);
+            console.log(result);
+    
+            setName("");
+            setEmail("");
+            setPassword("");
+            navigate('/dashboard');
+        }
     }
 
   return (
@@ -68,7 +71,14 @@ const Register = () => {
             <button> Register </button>
         </form>
 
-        <p className='not-a-member'> Already a member? <span> <button onClick={navigateToLogin}> Login </button> </span> </p>
+        <p className='not-a-member'> 
+            Already a member? <span> 
+                <button onClick={navigateToLogin}> Login </button> 
+            </span> 
+        </p>
+
+        <p id='error-text'></p>
+
     </main>
   )
 }

@@ -8,8 +8,6 @@ const Dashboard = () => {
   const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
 
-  console.log(jobs);
-
   useEffect(() => {
     getJobs();
   }, []);
@@ -98,7 +96,7 @@ const Dashboard = () => {
         <span> No </span> Job Found
       </h1>
     }
-    <div className='jobs-cont' style={{justifyContent: jobs.length === 1 ? 'center': 'space-between'}}>
+    <div className='jobs-cont'  style={{justifyContent: jobs && jobs.length === 1 ? 'center': 'space-between'}}>
       {
       jobs && jobs.map((item) => {
           return (

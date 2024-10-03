@@ -13,13 +13,23 @@ a {
 li {
   list-style: none;
 }
+html {
+  min-height: 100%;
+}
 body {
   background-color: rgb(238, 247, 250);
 }
 :root {
   --blue-color: #3f43e4;
 }
-
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  margin-bottom: 40px;
+}
 #error-text {
   /* background-color: red;
   width: 100%;
@@ -113,12 +123,18 @@ nav {
   margin-top: 15px;
   text-align: justify;
 }
+.btn-cont {
+  width: 175px;
+  display: flex;
+  justify-content: space-between;
+}
 .home-content-btn {
   margin-top: 30px;
   font-size: 17px;
   background-color: var(--blue-color);
   padding: 5px 8px;
   border-radius: 4px;
+;
 }
 .home-content-btn a {
   color: #fff;
@@ -278,4 +294,26 @@ nav {
   font-size: 18px;
   background-color: green;
   width: fit-content;
+}
+
+                          /*  Footer */
+                          /* ******* */
+footer {
+  margin-top: auto;
+  background-color: #3f43e4;
+  text-align: center;
+  color: #fff;
+  padding: 30px 0;
+}
+footer p {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+footer p span {
+  font-size: 17px;
+  font-style: italic;
+}
+footer a {
+  color: #fff;
 }

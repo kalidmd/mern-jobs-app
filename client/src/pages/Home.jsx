@@ -20,9 +20,15 @@ const Home = () => {
             </p>
             {
                 !token &&
-                <button className='home-content-btn'> 
-                     <NavLink to={'login'}>Login</NavLink>  
-                </button>
+                <div className='btn-cont'>    
+                    <button className='home-content-btn'> 
+                        <NavLink to={'login'}>Login</NavLink>  
+                    </button>
+                    <button className='home-content-btn'> 
+                        <NavLink to={'register'}>Register</NavLink>  
+                    </button>
+                </div>
+                      
             }
         </div>
 
