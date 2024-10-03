@@ -16,12 +16,17 @@ li {
 body {
   background-color: rgb(238, 247, 250);
 }
+:root {
+  --blue-color: #3f43e4;
+}
                             /*  Nav Bar   */
                             /* ********** */
 nav {
   background-color: #fff;
-  /* width: 100%; */
-  padding: 18px 0 18px 70px;
+  padding: 18px 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .nav-jobs-app {
   font-size: 35px;
@@ -29,7 +34,24 @@ nav {
   /* color: #fe7062; */
 }
 .nav-jobs-app span, .home-jobs-app span {
-  color: #3f43e4;
+  color: var(--blue-color);
+}
+.user-name-cont {
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+} 
+.user-name-cont span {
+  color: var(--blue-color);
+}
+.user-name-cont button {
+  margin-left: 15px;
+  background-color: var(--blue-color);
+  color: #fff;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 14px;
+  cursor: pointer;
 }
                             /*  Page Not Found  */
                             /* **************** */
@@ -43,7 +65,7 @@ nav {
   margin-bottom: 20px;
 }
 .page-not-found-cont a {
-  background-color: #3f43e4;
+  background-color: var(--blue-color);
   color: #fff;
   padding: 5px 8px;
   border-radius: 4px;
@@ -73,7 +95,7 @@ nav {
 .home-content-btn {
   margin-top: 30px;
   font-size: 17px;
-  background-color: #3f43e4;
+  background-color: var(--blue-color);
   padding: 5px 8px;
   border-radius: 4px;
 }
@@ -107,7 +129,7 @@ nav {
   margin-bottom: 15px;
   padding: 6px 0;
   text-indent: 5px;
-  border: 0.5px solid #3f43e4;
+  border: 0.5px solid var(--blue-color);
   border-radius: 4px;
 }
 .login-form button {
@@ -116,7 +138,7 @@ nav {
   font-size: 16px;
   font-weight: 600;
   color: #fff;
-  background-color: #3f43e4;
+  background-color: var(--blue-color);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -127,7 +149,7 @@ nav {
 .not-a-member button {
   border: none;
   background-color: transparent;
-  color: #3f43e4;
+  color: var(--blue-color);
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
@@ -140,4 +162,37 @@ nav {
   font-weight: 500;
   text-align: center;
   padding-top: 20px;
+}
+                          /*  Dashboard */
+                          /* ********** */
+.jobs-cont {
+  background-color: red;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 90%;
+  margin: 0 auto;
+}
+.jobs {
+  width: 400px;
+  height: 110px;
+  background-color: greenyellow;
+  /* margin: 10px; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.jobs-right-side {
+  /* background-color: black; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  
+}
+.jobs-left-side {
+  /* background-color: black; */
+
 }

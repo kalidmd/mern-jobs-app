@@ -65,7 +65,7 @@ const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button> Submit </button>
+            <button> Register </button>
         </form>
 
         <p className='not-a-member'> Already a member? <span> <button onClick={navigateToLogin}> Login </button> </span> </p>

@@ -2,7 +2,6 @@ require('dotenv').config();
 const User = require('../models/Users');
 const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, UnauthenticatedError } = require('../error')
-const bcrypt = require('bcryptjs');
 
 const registerUser = async (req, res) => {
     const user = await User.create({ ...req.body })
@@ -38,6 +37,11 @@ const login = async (req, res) => {
     return res.status(StatusCodes.OK).json({ user: user.name, token })
 }
 
+const dashboard = async (req, res) => {
+    // console.log(req.user);
+    res.status(200).json( req.user );
+}
+
 const getUsers = async (req, res) => {
     const user = await User.find({  });
 
@@ -48,4 +52,4 @@ const logout = async (req, res) => {
     res.send('Logout');
 }
 
-module.exports = { registerUser, getUsers, login, logout };
+module.exports = { registerUser, getUsers, login, dashboard, logout };

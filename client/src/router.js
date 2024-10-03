@@ -5,6 +5,7 @@ import PageNotFound from './pages/PageNotFound';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import UpdateJob from './pages/UpdateJob';
 
 const router = createBrowserRouter([
     {
@@ -26,7 +27,11 @@ const router = createBrowserRouter([
             },
             {
                 path: 'dashboard',
-                element: <Dashboard /> 
+                element: <Dashboard />
+            },
+            {
+                path: 'edit',
+                element: <UpdateJob />
             }
         ]
     }

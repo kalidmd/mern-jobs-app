@@ -40,7 +40,6 @@ const Login = () => {
 
         setEmail("");
         setPassword("");
-        // navigate('/dashboard'); 
 }
 
   return (
@@ -63,7 +62,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button> Submit </button>
+            <button> Login </button>
         </form>
 
         <p className='not-a-member'> 

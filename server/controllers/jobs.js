@@ -25,20 +25,28 @@ const getJobs = async (req, res) => {
 }
 
 const getSingleJob = async (req, res) => {
-    const { id: jobId } = req.params;
-    console.log(jobId);
+    const { params: {id: jobId}, user: {userId}  } = req;
     
-    const job = await Job.findOne({ _id:  jobId})
+    const job = await Job.findOne({ _id:  jobId, createdBy: userId})
 
     if(!job) {
-        throw new NotFoundError(`No Job Found With Id ${req.body._id}`)
+        throw new NotFoundError(`No Job Found With Id ${jobId}`)
     }
 
     res.status(StatusCodes.OK).json({ job });
 }
 
 const updateJob = async (req, res) => {
-    res.send('Update Job')
+    const { params: {id: jobId}, user: {userId}  } = req;
+
+    const job = await Job.findOneAndUpdate({ _id: jobId, createdBy: userId },  req.body, { new: true, runValidators: true })
+
+    if(!job) {
+        throw new NotFoundError(`No Job Found With Id ${jobId}`);
+    }
+
+    res.status(StatusCodes.OK).json({ job });
+
 }
 
 const deleteJob = async (req, res) => {
