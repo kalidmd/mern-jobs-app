@@ -8,6 +8,8 @@ const Dashboard = () => {
   const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
 
+  console.log(jobs);
+
   useEffect(() => {
     getJobs();
   }, []);
@@ -35,6 +37,7 @@ const Dashboard = () => {
     }
     setCompany('');
     setPosition('');
+    getJobs();
   }
 
   const getJobs = async () => {
@@ -52,15 +55,16 @@ const Dashboard = () => {
     setJobs(result.job);
   }
 
-  const editJob = async (id) => {
-    navigate('/edit')
+  const editJob = (id) => {
+    navigate(`/edit/${id}`)
+    console.log(id);
   }
 
 
   return (
     <main className='dashboard-main'>
       <div className='login-cont'>
-        <h2 className='login-title'> New Job </h2>
+        <h2 className='login-title'> Create New Job </h2>
         <form onSubmit={createJob} className='login-form'>
             <label>Company</label>
             <input 
@@ -78,35 +82,52 @@ const Dashboard = () => {
                 value={position}
                 onChange={(e) => setPosition(e.target.value)}
             />
-            <button> Submit </button>
+            <button> Add </button>
         </form>
         <p id='error-text'></p>
     </div>
 
-    <div className='jobs-cont'>
+    {
+      jobs ?
+      <h1 className='jobs-length'>
+
+        You've <span> { jobs.length } </span> Job(s)
+      </h1> :
+
+      <h1 className='jobs-length'>
+        <span> No </span> Job Found
+      </h1>
+    }
+    <div className='jobs-cont' style={{justifyContent: jobs.length === 1 ? 'center': 'space-between'}}>
       {
-        jobs.map((item) => {
+      jobs && jobs.map((item) => {
           return (
               <div key={item._id} className='jobs'>
                 <div className="jobs-left-side">
                   <p id='position-text'> {item.position} </p>
                   <p id='company-text'> {item.company} </p>
-                  <div>
-                    <button onClick={editJob} >Edit</button>
-                    <button>Delete</button>
+                  <div className='jobs-btn'>
+                    <button 
+                      className='jobs-edit-btn' 
+                      onClick={() => editJob(item._id)}
+                    >
+                      Edit
+                    </button>
+                    <button className='jobs-dlt-btn'>Delete</button>
 
                   </div>
                 </div>
 
                 <div className='jobs-right-side'>
                   <p id='date-text'> {item.createdAt} </p>
-                  <p id='status-text'> {item.status} </p>
+                  <p id='status-text'> {item.status.toUpperCase()} </p>
                 </div>
               </div>
-          )
+          ) 
         })
       }
     </div>
+    
   </main>
   )
 }

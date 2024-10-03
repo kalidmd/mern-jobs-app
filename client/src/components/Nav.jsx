@@ -5,6 +5,12 @@ const Nav = () => {
   const token = localStorage.getItem('token');
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
+  let fName
+
+  if (username) {
+    fName = username.split(' ')[0];
+    fName = fName.charAt(0).toUpperCase() + fName.slice(1);
+  }
 
   useEffect(()=> {
     const fetchUser = async () => {
@@ -37,10 +43,21 @@ const Nav = () => {
             <span className='blue-text'>App</span> 
           </h1>
         </NavLink>
+
+        {
+          token && 
+            <NavLink 
+              className='dashboard' 
+              to={'dashboard'}
+            > 
+              Dashboard 
+            </NavLink>
+        }
+
         { username && 
           <div className='user-name-cont'>
             <p>
-              Welcome, <span className='blue-text'> { username } </span> 
+              Hello, <span className='blue-text'> { fName } </span> 
             </p> 
             <button onClick={logout}>Logout</button>
           </div>

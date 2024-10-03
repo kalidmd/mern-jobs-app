@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom'
 import jobImage from '../resources/images/job.png';
 
 const Home = () => {
+    const token = localStorage.getItem('token');
+
   return (
     <main className='home-cont'>
         <div className='home-content'>
@@ -16,9 +18,12 @@ const Home = () => {
                 <br/>
                 Vestibulum in neque vitae erat pellentesque tincidunt vitae mauris dapibus scelerisque sit amet diam vitae mauris dapibus scelerisque sed.
             </p>
-            <button className='home-content-btn'> 
-                <NavLink to={'login'}>Login</NavLink>  
-            </button>
+            {
+                !token &&
+                <button className='home-content-btn'> 
+                     <NavLink to={'login'}>Login</NavLink>  
+                </button>
+            }
         </div>
 
         <div className='home-image'>

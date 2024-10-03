@@ -1,28 +1,61 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+// import Test from '../components/Test';
 
 const UpdateJob = () => {
     const [company, setCompany] = useState('');
     const [position, setPosition] = useState('');
+    const [status, setStatus] = useState(undefined);
+    const [options] =useState(['pending', 'interview', 'declined']);
+    const [updated, setUpdated] = useState(undefined);
+    const navigate = useNavigate();
+
+    // console.log(status);
     const params = useParams();
-    console.log(params);
+
+    useEffect(() => {
+        const getSingleJob = async () => {
+            const token = localStorage.getItem('token');
+            let result = await fetch(`http://localhost:5000/api/v1/jobs/${params.id}`, {
+                method: 'get',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+    
+            result = await result.json();
+            // console.log(result.job);
+            setCompany(result.job.company);
+            setPosition(result.job.position);
+            setStatus(result.job.status);
+        }
+
+        getSingleJob();
+    }, [params])
+        
 
     const updateJob = async (e) => {
         const token = localStorage.getItem('token');
         e.preventDefault();
-        let result = await fetch(`http://localhost:5000/api/v1/jobs/${params.id}`, {
+
+        await fetch(`http://localhost:5000/api/v1/jobs/${params.id}`, {
             method: 'put',
-            body: JSON.stringify({  company, position }),
+            body: JSON.stringify({  company, position, status }),
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         })
-
-        result = await result.json();
+        setUpdated(true);
+        setTimeout(() => {
+            setUpdated(false);
+            navigate('/dashboard');
+        }, 1000);
     }
+
     return (
-    <div className='login-cont'>
+    <div className='login-cont update-cont'>
         <h2 className='login-title'> Update Job </h2>
         <form onSubmit={updateJob} className='login-form'>
             <label>Company</label>
@@ -41,9 +74,24 @@ const UpdateJob = () => {
                 value={position}
                 onChange={(e) => setPosition(e.target.value)}
             />
+            <label>Status</label>
+            <select 
+                value={status} 
+                onChange={(e) => setStatus(e.target.value)}
+                className='status-select'
+            >
+                {
+                    options.map((option, index) => {
+                        return (
+                            <option key={index}> {option} </option>
+                        )
+                    })
+                }
+            </select>
+            
             <button> Edit </button>
         </form>
-        <p id='error-text'></p>
+        {updated && <p id='success-text'> Updated! </p>}
     </div>
   )
 }
