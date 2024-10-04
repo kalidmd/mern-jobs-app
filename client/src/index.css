@@ -110,15 +110,10 @@ nav {
 .home-cont {
   width: 85%;
   margin: 40px auto;
-  /* background-color: lightgrey; */
   display: flex;
   justify-content: space-between;
 }
-.home-content {
-  /* background-color: red; */
-}
 .home-content-par {
-  /* background-color: green; */
   width: 85%;
   margin-top: 15px;
   text-align: justify;
@@ -280,9 +275,9 @@ nav {
   border-radius: 4px;
   position: absolute;
   top: 50%;
-  margin-top: -13px;
   left: 50%;
-  margin-left: -52.5px;
+  z-index: 5;
+  box-shadow: 0 5px 25px rgb(1 1 1 /10%);
 }
                           /*  Update */
                           /* ******* */

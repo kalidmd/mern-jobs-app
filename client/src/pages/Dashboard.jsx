@@ -7,7 +7,9 @@ const Dashboard = () => {
   const errorText = document.getElementById('error-text'); 
   const [jobs, setJobs] = useState([]);
   const [jobDeleted, setJobDeleted] = useState(undefined);
+  const [companyName, setCompanyName] =useState(undefined);
   const navigate = useNavigate();
+  const deletedJob = document.getElementById('deleted-job');
 
   useEffect(() => {
     getJobs();
@@ -60,14 +62,16 @@ const Dashboard = () => {
 
   const deleteJob = async (id, company) => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:5000/api/v1/jobs/${id}`, {
+    let result = await fetch(`http://localhost:5000/api/v1/jobs/${id}`, {
       method: 'delete',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
-
+    result = await result.json();
+    // console.log(result.company);
+    setCompanyName(result.company)
     getJobs();
     setJobDeleted(true);
 
@@ -147,7 +151,19 @@ const Dashboard = () => {
           ) 
         })
       }
-      { jobDeleted && <p className='deleted-job'> Job Deleted! </p> }
+      { 
+        jobDeleted && 
+        <p 
+          id='deleted-job'
+          className='deleted-job' 
+          style={{
+            marginLeft: deletedJob && `${-deletedJob.offsetWidth / 2}px` , 
+            marginTop: deletedJob && `${-deletedJob.offsetHeight / 2}px` 
+          }}
+        > 
+          {`${companyName} has been deleted!`} 
+        </p> 
+      }
     </div>
     
   </main>
