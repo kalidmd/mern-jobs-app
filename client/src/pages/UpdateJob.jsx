@@ -91,7 +91,7 @@ const UpdateJob = () => {
             
             <button> Edit </button>
         </form>
-        {updated && <p id='success-text'> Updated! </p>}
+        {updated && <p id='success-text'> Job Edited! </p>}
     </div>
   )
 }

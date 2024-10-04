@@ -201,6 +201,7 @@ nav {
   gap: 40px;
   width: 90%;
   margin: 0 auto;
+  position: relative;
 }
 .jobs-length {
   text-align: center;
@@ -270,6 +271,18 @@ nav {
 #status-text {
   padding-bottom: 14px;
   padding-right: 10px;
+}
+.deleted-job {
+  color: #fff;
+  font-size: 18px;
+  background-color: darkred;
+  padding: 4px 7px;
+  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  margin-top: -13px;
+  left: 50%;
+  margin-left: -52.5px;
 }
                           /*  Update */
                           /* ******* */

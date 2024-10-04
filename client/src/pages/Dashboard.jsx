@@ -6,6 +6,7 @@ const Dashboard = () => {
   const [position, setPosition] = useState('');
   const errorText = document.getElementById('error-text'); 
   const [jobs, setJobs] = useState([]);
+  const [jobDeleted, setJobDeleted] = useState(undefined);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const Dashboard = () => {
   }
 
   const getJobs = async () => {
-    const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
     let result = await fetch('http://localhost:5000/api/v1/jobs', {
       method: 'get',
@@ -55,7 +56,24 @@ const Dashboard = () => {
 
   const editJob = (id) => {
     navigate(`/edit/${id}`)
-    console.log(id);
+  }
+
+  const deleteJob = async (id, company) => {
+    const token = localStorage.getItem('token');
+    await fetch(`http://localhost:5000/api/v1/jobs/${id}`, {
+      method: 'delete',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    getJobs();
+    setJobDeleted(true);
+
+    setTimeout(() => {
+      setJobDeleted(false);
+    }, 2000)
   }
 
 
@@ -111,7 +129,12 @@ const Dashboard = () => {
                     >
                       Edit
                     </button>
-                    <button className='jobs-dlt-btn'>Delete</button>
+                    <button 
+                      className='jobs-dlt-btn'
+                      onClick={() => deleteJob(item._id, item.company)}
+                    >
+                      Delete
+                    </button>
 
                   </div>
                 </div>
@@ -124,6 +147,7 @@ const Dashboard = () => {
           ) 
         })
       }
+      { jobDeleted && <p className='deleted-job'> Job Deleted! </p> }
     </div>
     
   </main>

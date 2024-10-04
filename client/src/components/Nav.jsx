@@ -29,8 +29,7 @@ const Nav = () => {
   
   }, [token])
 
-    const logout = () => {
-    console.log('Logged Out');
+  const logout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   }
