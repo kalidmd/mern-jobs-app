@@ -3,11 +3,13 @@ const mongoose = require('mongoose')
 const jobSchema = new mongoose.Schema({
     company: {
         type: String,
-        required: [true, 'Please Provide Company Name']
+        required: [true, 'Please Provide Company Name'],
+        unique: true
     },
     position: {
         type: String,
-        required: [true, 'Please Provide Position']
+        required: [true, 'Please Provide Position'],
+        unique: true
     },
     status: {
         type: String,
