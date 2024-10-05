@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+    const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
+    // const LocalHost = 'http://localhost:5000';
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,7 +17,7 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         
-        let result = await fetch('http://localhost:5000/api/v1/users/register', {
+        let result = await fetch(`${APIUrl}/api/v1/users/register`, {
             method: 'post',
             body: JSON.stringify({name, email, password}),
             headers: {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const errorText = document.getElementById('error-text'); 
@@ -19,7 +20,7 @@ const Dashboard = () => {
     e.preventDefault();
     const token = localStorage.getItem('token');
 
-    let result = await fetch('http://localhost:5000/api/v1/jobs', {
+    let result = await fetch(`${APIUrl}/api/v1/jobs`, {
       method: 'post',
       body: JSON.stringify({company, position}),
       headers: {
@@ -44,7 +45,7 @@ const Dashboard = () => {
   const getJobs = async () => {
   const token = localStorage.getItem('token');
 
-    let result = await fetch('http://localhost:5000/api/v1/jobs', {
+    let result = await fetch(`${APIUrl}/api/v1/jobs`, {
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -62,7 +63,7 @@ const Dashboard = () => {
 
   const deleteJob = async (id, company) => {
     const token = localStorage.getItem('token');
-    let result = await fetch(`http://localhost:5000/api/v1/jobs/${id}`, {
+    let result = await fetch(`${APIUrl}/api/v1/jobs/${id}`, {
       method: 'delete',
       headers: {
         Authorization: `Bearer ${token}`,

@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 // import Test from '../components/Test';
 
 const UpdateJob = () => {
+    const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
+    // const LocalHost = 'http://localhost:5000';
     const [company, setCompany] = useState('');
     const [position, setPosition] = useState('');
     const [status, setStatus] = useState(undefined);
@@ -10,13 +12,12 @@ const UpdateJob = () => {
     const [updated, setUpdated] = useState(undefined);
     const navigate = useNavigate();
 
-    // console.log(status);
     const params = useParams();
 
     useEffect(() => {
         const getSingleJob = async () => {
             const token = localStorage.getItem('token');
-            let result = await fetch(`http://localhost:5000/api/v1/jobs/${params.id}`, {
+            let result = await fetch(`${APIUrl}/api/v1/jobs/${params.id}`, {
                 method: 'get',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -25,7 +26,7 @@ const UpdateJob = () => {
             })
     
             result = await result.json();
-            // console.log(result.job);
+
             setCompany(result.job.company);
             setPosition(result.job.position);
             setStatus(result.job.status);
@@ -39,9 +40,9 @@ const UpdateJob = () => {
         const token = localStorage.getItem('token');
         e.preventDefault();
 
-        await fetch(`http://localhost:5000/api/v1/jobs/${params.id}`, {
+        await fetch(`${APIUrl}/api/v1/jobs/${params.id}`, {
             method: 'put',
-            body: JSON.stringify({  company, position, status }),
+            body: JSON.stringify({ company, position, status }),
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'

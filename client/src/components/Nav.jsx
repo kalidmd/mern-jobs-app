@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 const Nav = () => {
+  const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
   const token = localStorage.getItem('token');
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Nav = () => {
 
   useEffect(()=> {
     const fetchUser = async () => {
-      let result = await fetch('http://localhost:5000/api/v1/users/dashboard', {
+      let result = await fetch(`${APIUrl}/api/v1/users/dashboard`, {
         method: 'get',
         headers: {
           Authorization: `Bearer ${token}`
