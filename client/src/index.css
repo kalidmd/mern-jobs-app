@@ -27,6 +27,14 @@ body {
   display: flex;
   flex-direction: column;
 }
+/* --loading suspense-- */
+.loading {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 main {
   margin-bottom: 40px;
 }
