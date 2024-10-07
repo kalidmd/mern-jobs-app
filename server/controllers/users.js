@@ -42,14 +42,14 @@ const dashboard = async (req, res) => {
     res.status(200).json( req.user );
 }
 
-const getUsers = async (req, res) => {
-    const user = await User.find({  });
+// const getUsers = async (req, res) => {
+//     const user = await User.find({  });
 
-    res.status(StatusCodes.OK).json({ count: user.length, user });
-}
+//     res.status(StatusCodes.OK).json({ count: user.length, user });
+// }
 
 const logout = async (req, res) => {
     res.send('Logout');
 }
 
-module.exports = { registerUser, getUsers, login, dashboard, logout };
+module.exports = { registerUser, login, dashboard, logout };
