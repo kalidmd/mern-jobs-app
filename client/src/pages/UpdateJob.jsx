@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-// import Test from '../components/Test';
 
 const UpdateJob = () => {
     // const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
@@ -75,6 +74,7 @@ const UpdateJob = () => {
                 <form onSubmit={updateJob} className='login-form'>
                         <label>Company</label>
                         <input 
+                            className='input-valid'
                             type="text" 
                             placeholder='enter company'
                             required
@@ -83,6 +83,7 @@ const UpdateJob = () => {
                         />
                         <label>Position</label>
                         <input 
+                            className='input-valid'
                             type="text" 
                             placeholder='enter position'
                             required
