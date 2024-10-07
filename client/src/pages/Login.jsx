@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-    const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
-    // const LocalHost = 'http://localhost:5000';
+    // const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
+    const localHost = 'http://localhost:5000';
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,7 +19,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        let result = await fetch(`${APIUrl}/api/v1/users/login`, {
+        const response = await fetch(`${localHost}/api/v1/users/login`, {
             method: 'post',
             body: JSON.stringify({email, password}),
             headers: {
@@ -27,13 +27,13 @@ const Login = () => {
             }
         })
 
-        result = await result.json();
+        const data = await response.json();
 
-        localStorage.setItem('token', result.token)
+        localStorage.setItem('token', data.token)
 
-        if (result.msg) {
+        if (data.msg) {
             localStorage.removeItem('token');
-            errorText.textContent = result.msg;
+            errorText.textContent = data.msg;
         } else {
             errorText.textContent = '';
             navigate('/dashboard');

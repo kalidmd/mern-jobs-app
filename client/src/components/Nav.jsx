@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 const Nav = () => {
-  const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
+  // const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
+  const localHost = 'http://localhost:5000';
+
   const token = localStorage.getItem('token');
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
@@ -15,14 +17,14 @@ const Nav = () => {
 
   useEffect(()=> {
     const fetchUser = async () => {
-      let result = await fetch(`${APIUrl}/api/v1/users/dashboard`, {
+      const response = await fetch(`${localHost}/api/v1/users/dashboard`, {
         method: 'get',
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      result = await result.json();
-      setUsername(result.name);
+      const data = await response.json();
+      setUsername(data.name);
     }
     
     fetchUser();

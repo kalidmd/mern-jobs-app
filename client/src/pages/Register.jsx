@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
-    // const LocalHost = 'http://localhost:5000';
+    // const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
+    const localHost = 'http://localhost:5000';
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,7 +18,7 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         
-        let result = await fetch(`${APIUrl}/api/v1/users/register`, {
+        const response = await fetch(`${localHost}/api/v1/users/register`, {
             method: 'post',
             body: JSON.stringify({name, email, password}),
             headers: {
@@ -25,15 +26,12 @@ const Register = () => {
             }
         })
 
-        result = await result.json();
+        const data = await response.json();
         
-        if(result.msg) {
-            errorText.textContent = result.msg
+        if(data.msg) {
+            errorText.textContent = data.msg
         } else {
-            localStorage.setItem('token', result.token);
-            const data = { name, email, password }
-            console.log(data);
-            console.log(result);
+            localStorage.setItem('token', data.token);
     
             setName("");
             setEmail("");

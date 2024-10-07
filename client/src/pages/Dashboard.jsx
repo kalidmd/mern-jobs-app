@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-  const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
+  // const APIUrl = 'https://mern-jobs-app-llm4.onrender.com';
+  const localHost = 'http://localhost:5000';
+
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const errorText = document.getElementById('error-text'); 
@@ -20,7 +22,7 @@ const Dashboard = () => {
     e.preventDefault();
     const token = localStorage.getItem('token');
 
-    let result = await fetch(`${APIUrl}/api/v1/jobs`, {
+    const response = await fetch(`${localHost}/api/v1/jobs`, {
       method: 'post',
       body: JSON.stringify({company, position}),
       headers: {
@@ -29,11 +31,11 @@ const Dashboard = () => {
       }
     })
 
-    result = await result.json();
+    const data = await response.json();
     // 08:38:57
 
-    if (result.msg) {
-      errorText.textContent = result.msg
+    if (data.msg) {
+      errorText.textContent = data.msg
     } else {
       errorText.textContent = '';
     }
@@ -45,7 +47,7 @@ const Dashboard = () => {
   const getJobs = async () => {
   const token = localStorage.getItem('token');
 
-    let result = await fetch(`${APIUrl}/api/v1/jobs`, {
+    const response = await fetch(`${localHost}/api/v1/jobs`, {
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -53,8 +55,8 @@ const Dashboard = () => {
       }
     });
 
-    result = await result.json();
-    setJobs(result.job);
+    const data = await response.json();
+    setJobs(data.job);
   }
 
   const editJob = (id) => {
@@ -63,16 +65,16 @@ const Dashboard = () => {
 
   const deleteJob = async (id, company) => {
     const token = localStorage.getItem('token');
-    let result = await fetch(`${APIUrl}/api/v1/jobs/${id}`, {
+    const response = await fetch(`${localHost}/api/v1/jobs/${id}`, {
       method: 'delete',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
-    result = await result.json();
-    // console.log(result.company);
-    setCompanyName(result.company)
+    const data = await response.json();
+    // console.log(data.company);
+    setCompanyName(data.company)
     getJobs();
     setJobDeleted(true);
 
