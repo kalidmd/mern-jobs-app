@@ -33,16 +33,52 @@ body {
   text-align: center;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  padding: 40px 0;
+}
+.loading-ring {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  animation: loading-ring 1.5s linear infinite;
+  color: red;
+}
+@keyframes loading-ring {
+  0%{
+    transform: rotate(0deg);
+    box-shadow: 1px 4px 2px var(--blue-color);
+  }
+  100%{
+    transform: rotate(360deg);
+    box-shadow: 1px 4px 2px var(--blue-color);
+  }
+}
+.loading-ring::before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(255, 255, 255, .3);
 }
 main {
   margin-bottom: 40px;
+}
+.input-error {
+  margin-bottom: 15px;
+  padding: 6px 0;
+  text-indent: 5px;
+  border: 0.5px solid red;
+  border-radius: 4px;
 }
 #error-text {
   /* background-color: red;
   width: 100%;
   height: 10px; */
-  color: darkred;
+  color: red;
   font-weight: 500;
   text-align: center;
   padding-top: 20px;
@@ -142,7 +178,6 @@ nav {
 .home-content-btn a {
   color: #fff;
 }
-
                           /*  Login Page */
                           /* ********** */
 .login-cont {
@@ -165,7 +200,7 @@ nav {
 .login-form label {
   margin-bottom: 10px;
 }
-.login-form input, .status-select {
+.input-valid, .status-select {
   margin-bottom: 15px;
   padding: 6px 0;
   text-indent: 5px;

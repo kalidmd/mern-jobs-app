@@ -16,7 +16,7 @@ const createJob = async (req, res) => {
 const getJobs = async (req, res) => {
     const { userId } = req.user
 
-    const job = await Job.find({ createdBy: userId }).sort('-createdAt');
+    const job = await Job.find({ createdBy: userId }).sort('-updatedAt');
     if(job.length < 1) {
         throw new NotFoundError('No Job Found');
     }

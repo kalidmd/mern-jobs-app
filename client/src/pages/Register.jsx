@@ -8,7 +8,10 @@ const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const errorText = document.getElementById('error-text');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false);
+
+    // const errorText = document.getElementById('error-text');
     const navigate = useNavigate();
 
     const navigateToLogin = () => {
@@ -17,7 +20,7 @@ const Register = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        
+        setIsLoading(true);
         const response = await fetch(`${localHost}/api/v1/users/register`, {
             method: 'post',
             body: JSON.stringify({name, email, password}),
@@ -29,15 +32,18 @@ const Register = () => {
         const data = await response.json();
         
         if(data.msg) {
-            errorText.textContent = data.msg
+            // errorText.textContent = data.msg
+            setError(data.msg)
         } else {
             localStorage.setItem('token', data.token);
     
             setName("");
             setEmail("");
             setPassword("");
+            setError(false);
             navigate('/dashboard');
         }
+        setIsLoading(false);
     }
 
   return (
@@ -46,6 +52,7 @@ const Register = () => {
         <form onSubmit={handleRegister} className='login-form'>
             <label>Name</label>
             <input 
+                className='input-valid'
                 type="text" 
                 placeholder='enter email'
                 required
@@ -54,6 +61,7 @@ const Register = () => {
             />
             <label>Email</label>
             <input 
+                className='input-valid'
                 type="email" 
                 placeholder='enter email'
                 required
@@ -62,13 +70,14 @@ const Register = () => {
             />
             <label>Password</label>
             <input 
+                className='input-valid'
                 type="password" 
                 placeholder='enter password'
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button> Register </button>
+            <button> {isLoading ? 'Registering...' : 'Register'} </button>
         </form>
 
         <p className='not-a-member'> 
@@ -77,7 +86,8 @@ const Register = () => {
             </span> 
         </p>
 
-        <p id='error-text'></p>
+        { error &&  <p id='error-text'>{error}</p>}
+
 
     </main>
   )

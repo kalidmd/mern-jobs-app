@@ -7,8 +7,9 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const [ errorAlert, setErrorAlert ] = useState();
-    const errorText = document.getElementById('error-text')
+    const [isLoading, setIsLoading] = useState(false);
+    // const errorText = document.getElementById('error-text');
+    const [error, setError] = useState(false);
 
     const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+        setIsLoading(true);
         const response = await fetch(`${localHost}/api/v1/users/login`, {
             method: 'post',
             body: JSON.stringify({email, password}),
@@ -33,14 +34,17 @@ const Login = () => {
 
         if (data.msg) {
             localStorage.removeItem('token');
-            errorText.textContent = data.msg;
+            // errorText.textContent = data.msg;
+            setError(data.msg);
         } else {
-            errorText.textContent = '';
+            setError(false);
+            // errorText.textContent = '';
             navigate('/dashboard');
         }
 
         setEmail("");
         setPassword("");
+        setIsLoading(false);
 }
 
   return (
@@ -49,6 +53,7 @@ const Login = () => {
         <form onSubmit={handleLogin} className='login-form'>
             <label>Email</label>
             <input 
+                className={error ? 'input-error': 'input-valid'}
                 type="email" 
                 placeholder='enter email'
                 required
@@ -57,13 +62,14 @@ const Login = () => {
             />
             <label>Password</label>
             <input 
+                className={error ? 'input-error': 'input-valid'}
                 type="password" 
                 placeholder='enter password'
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button> Login </button>
+            <button> { isLoading ? 'Authorizing...' : 'Login'} </button>
         </form>
 
         <p className='not-a-member'> 
@@ -73,7 +79,8 @@ const Login = () => {
             </span> 
         </p>
 
-        <p id='error-text'></p>
+        { error &&  <p id='error-text'>{error +', Please Try Again Correctly.'}</p>}
+        
     </main>
   )
 }

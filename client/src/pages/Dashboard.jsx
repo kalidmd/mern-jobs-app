@@ -7,12 +7,15 @@ const Dashboard = () => {
 
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
-  const errorText = document.getElementById('error-text'); 
+  const [error, setError] = useState(false);
+  // const errorText = document.getElementById('error-text'); 
   const [jobs, setJobs] = useState([]);
-  const [jobDeleted, setJobDeleted] = useState(undefined);
-  const [companyName, setCompanyName] =useState(undefined);
+  // const [companyName, setCompanyName] =useState(undefined);
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false);
+  const [isLoadingGet, setIsLoadingGet] = useState(false);
+  
   const navigate = useNavigate();
-  const deletedJob = document.getElementById('deleted-job');
+  // const deletedJob = document.getElementById('deleted-job');
 
   useEffect(() => {
     getJobs();
@@ -21,7 +24,7 @@ const Dashboard = () => {
   const createJob = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-
+    setIsLoadingCreate(true);
     const response = await fetch(`${localHost}/api/v1/jobs`, {
       method: 'post',
       body: JSON.stringify({company, position}),
@@ -33,11 +36,13 @@ const Dashboard = () => {
 
     const data = await response.json();
     // 08:38:57
+    setIsLoadingCreate(false);
 
     if (data.msg) {
-      errorText.textContent = data.msg
+      setError(data.msg)
     } else {
-      errorText.textContent = '';
+      setError(false);
+      // errorText.textContent = '';
     }
     setCompany('');
     setPosition('');
@@ -45,8 +50,8 @@ const Dashboard = () => {
   }
 
   const getJobs = async () => {
-  const token = localStorage.getItem('token');
-
+    const token = localStorage.getItem('token');
+    setIsLoadingGet(true);
     const response = await fetch(`${localHost}/api/v1/jobs`, {
       method: 'get',
       headers: {
@@ -57,6 +62,8 @@ const Dashboard = () => {
 
     const data = await response.json();
     setJobs(data.job);
+
+    setIsLoadingGet(false)
   }
 
   const editJob = (id) => {
@@ -65,22 +72,18 @@ const Dashboard = () => {
 
   const deleteJob = async (id, company) => {
     const token = localStorage.getItem('token');
-    const response = await fetch(`${localHost}/api/v1/jobs/${id}`, {
+    await fetch(`${localHost}/api/v1/jobs/${id}`, {
       method: 'delete',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
-    const data = await response.json();
+    // const data = await response.json();
     // console.log(data.company);
-    setCompanyName(data.company)
+    // setCompanyName(data.company)
     getJobs();
-    setJobDeleted(true);
 
-    setTimeout(() => {
-      setJobDeleted(false);
-    }, 2000)
   }
 
 
@@ -91,6 +94,7 @@ const Dashboard = () => {
         <form onSubmit={createJob} className='login-form'>
             <label>Company</label>
             <input 
+                className={error ? 'input-error': 'input-valid'}
                 type="text" 
                 placeholder='enter company'
                 required
@@ -99,32 +103,49 @@ const Dashboard = () => {
             />
             <label>Position</label>
             <input 
+                className={error ? 'input-error': 'input-valid'}
                 type="text" 
                 placeholder='enter company'
                 required
                 value={position}
                 onChange={(e) => setPosition(e.target.value)}
             />
-            <button> Add </button>
+            <button> {isLoadingCreate ? 'Creating Job...' : 'Add'} </button>
         </form>
-        <p id='error-text'></p>
+
+        { error &&  <p id='error-text'>{error}</p>}
+
+        
     </div>
 
     {
-      jobs ?
-      <h1 className='jobs-length'>
-
-        You've <span> { jobs.length } </span> Job(s)
-      </h1> :
-
-      <h1 className='jobs-length'>
-        <span> No </span> Job Found
-      </h1>
+      isLoadingGet && 
+        <div className="loading">
+          <div className="loading-ring"></div>
+        </div>
     }
-    <div className='jobs-cont'  style={{justifyContent: jobs && jobs.length === 1 ? 'center': 'space-between'}}>
+
+    { !isLoadingGet && <div>
       {
-      jobs && jobs.map((item) => {
-          return (
+        jobs ?
+        <h1 className='jobs-length'>
+
+          You've <span> { jobs.length } </span> Job(s)
+        </h1> :
+
+        <h1 className='jobs-length'>
+          <span> No </span> Job Found
+        </h1>
+      }
+      <div 
+        className='jobs-cont'  
+        style={{
+          justifyContent: jobs && jobs.length === 1 ? 
+          'center': 'space-between'}}
+      >
+        {
+          jobs && jobs.map((item) => {
+            return (
               <div key={item._id} className='jobs'>
                 <div className="jobs-left-side">
                   <p id='position-text'> {item.position} </p>
@@ -151,23 +172,11 @@ const Dashboard = () => {
                   <p id='status-text'> {item.status.toUpperCase()} </p>
                 </div>
               </div>
-          ) 
-        })
-      }
-      { 
-        jobDeleted && 
-        <p 
-          id='deleted-job'
-          className='deleted-job' 
-          style={{
-            marginLeft: deletedJob && `${-deletedJob.offsetWidth / 2}px` , 
-            marginTop: deletedJob && `${-deletedJob.offsetHeight / 2}px` 
-          }}
-        > 
-          {`${companyName} has been deleted!`} 
-        </p> 
-      }
-    </div>
+            ) 
+          })
+        }
+      </div>
+    </div>}
     
   </main>
   )
